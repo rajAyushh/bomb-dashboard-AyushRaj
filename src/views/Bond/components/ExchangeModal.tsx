@@ -51,6 +51,7 @@ const ExchangeModal: React.FC<ExchangeModalProps> = ({
         <Button text={action} onClick={() => onConfirm(val)} />
       </ModalActions>
     </Modal>
+    // <h2>modal</h2>
   );
 };
 

@@ -3,7 +3,6 @@ import HomeImage from '../../assets/img/dashboard_background.png';
 import { createGlobalStyle } from 'styled-components';
 import { Switch } from 'react-router-dom';
 import Page from '../../components/Page';
-import { Helmet } from 'react-helmet';
 import UnlockWallet from '../../components/UnlockWallet';
 import BombFinanceSummary from './components/BombFinanceSummary';
 import { useWallet } from 'use-wallet';
@@ -12,6 +11,7 @@ import useBombStats from '../../hooks/useBombStats';
 import useBondStats from '../../hooks/useBondStats';
 import usebShareStats from '../../hooks/usebShareStats';
 import BoardroomNews from './components/BoardroomNews';
+import BombFarms from './components/BombFarms';
 const BackgroundImage = createGlobalStyle`
   body {
     background: url(${HomeImage}) repeat !important;
@@ -86,14 +86,15 @@ const Dashboard = () => {
     <Switch>
       <Page>
         <BackgroundImage />
-        <Helmet>
           <title>{TITLE}</title>
-        </Helmet>
         {!!account ? (
           <><div>
             <BombFinanceSummary details={details} bombFinance={bombFinance} />
           </div><div>
               <BoardroomNews />
+            </div>
+            <div>
+              <BombFarms />
             </div></>
         ) : (
           <UnlockWallet />

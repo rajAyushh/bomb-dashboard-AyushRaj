@@ -30,7 +30,9 @@ const BombFinanceSummary: React.FC<any> = ({ bombFinance, details }) => {
           <Paper style={{ background: 'rgba(30, 32, 60, 0.5)', height: '400px', borderRadius: '2px' }}>
             {/* start of BombFinanceSummary table */}
             <div style={{ textAlign: 'center', paddingTop: '2px' }}>
-              <p>Bomb Finance Summary</p>
+              <h3 style={{ color: 'white' ,paddingTop: '10px',textTransform: 'capitalize' }}>
+              Bomb Finance Summary
+              </h3>
               <hr style={{ border: '0.7px solid rgba(199, 195, 200, 0.8)', width: '95%' }} />
             </div>
             <Grid container spacing={1} style={{ textAlign: 'center', paddingTop: '15px' }}>

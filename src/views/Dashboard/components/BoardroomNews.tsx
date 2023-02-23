@@ -124,7 +124,7 @@ const BoardroomNews: React.FC<any> = () => {
           >
               <Box p={4} style={{ textAlign: 'left' }}>
                 <img alt="b share" style={{ width: '50px', float: 'left', marginRight: '10px' }} src={BShareImage} />
-                <h3 style={{ color: 'white' }}>
+                <h3 style={{ color: 'white' , textTransform: 'capitalize' }}>
                   BoardRoom
                   <span
                     style={{
@@ -133,7 +133,7 @@ const BoardroomNews: React.FC<any> = () => {
                       padding: '3px',
                       borderRadius: '3px',
                       marginLeft: '20px',
-                      verticalAlign: 'center',
+                      verticalAlign: 'center', textTransform: 'capitalize',
                       backgroundColor: 'rgba(0, 232, 162, 0.5)',
                     }}
                   >

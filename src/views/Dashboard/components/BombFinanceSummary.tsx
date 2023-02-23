@@ -1,16 +1,29 @@
 import React, { useMemo } from 'react';
-import styled from 'styled-components';
 import MetamaskFox from '../../../assets/img/metamask-fox.svg';
+import ProgressCountdown from '../../Boardroom/components/ProgressCountdown';
 import { roundAndFormatNumber } from '../../../0x';
+import useCurrentEpoch from '../../../hooks/useCurrentEpoch';
+import useTreasuryAllocationTimes from '../../../hooks/useTreasuryAllocationTimes';
+import useTotalValueLocked from '../../../hooks/useTotalValueLocked';
+import useCashPriceInLastTWAP from '../../../hooks/useCashPriceInLastTWAP';
+import useCashPriceInEstimatedTWAP from '../../../hooks/useCashPriceInEstimatedTWAP';
 import BombImage from '../../../assets/img/bomb.png';
 import BShareImage from '../../../assets/img/bshare-512.png';
 import Bbond from '../../../assets/img/bbond-512.png';
-import { Box, Button, Card, CardContent, Grid, Paper, Typography } from '@material-ui/core';
+import moment from 'moment';
+import { Grid, Paper, Typography } from '@material-ui/core';
 
 const BombFinanceSummary: React.FC<any> = ({ bombFinance, details }) => {
-
+  //token details
   const { bomb, bshare, bbond } = details;
-  //all details for subtable 1
+  //epoch and twap details
+  const currentEpoch = useCurrentEpoch();
+  const { to } = useTreasuryAllocationTimes();
+  const cashStat = useCashPriceInEstimatedTWAP();
+  const livetwap = useMemo(() => (cashStat ? Number(cashStat.priceInDollars).toFixed(4) : null), [cashStat]);
+  const lastCashStat = useCashPriceInLastTWAP();
+  const lasttwap = (Number(lastCashStat) / 100000000000000).toFixed(4);
+  const tvl = useTotalValueLocked();
   return (
     <>
         <Grid xs={12} style={{ marginBottom: '12px' }}>
@@ -18,9 +31,9 @@ const BombFinanceSummary: React.FC<any> = ({ bombFinance, details }) => {
             {/* start of BombFinanceSummary table */}
             <div style={{ textAlign: 'center', paddingTop: '2px' }}>
               <p>Bomb Finance Summary</p>
-              <hr style={{ border: '0.5px solid rgba(199, 195, 200, 0.75)', width: '95%' }} />
+              <hr style={{ border: '0.7px solid rgba(199, 195, 200, 0.8)', width: '95%' }} />
             </div>
-            <Grid container spacing={2} style={{ textAlign: 'center', paddingTop: '15px' }}>
+            <Grid container spacing={1} style={{ textAlign: 'center', paddingTop: '15px' }}>
               <Grid item xs={5} style={{ textAlign: 'center', paddingLeft: '10px' }}>
                 <Grid container style={{ textAlign: 'center', fontSize: '0.8rem' }}>
                   <Grid item xs={3}></Grid>
@@ -34,7 +47,7 @@ const BombFinanceSummary: React.FC<any> = ({ bombFinance, details }) => {
                     <span>Price</span>
                   </Grid>
                 </Grid>
-                <hr style={{ border: '0.5px solid rgba(195, 197, 203, 0.75)', marginLeft: '70px' }} />
+                <hr style={{ border: '0.5px solid rgba(199, 195, 200, 0.8)', marginLeft: '70px' }} />
                 <Grid container style={{ textAlign: 'center' }}>
                   <Grid item xs={3}>
                     <img
@@ -65,7 +78,7 @@ const BombFinanceSummary: React.FC<any> = ({ bombFinance, details }) => {
                     <p style={{ padding: '0' }}>{roundAndFormatNumber(bomb.price.inbnb, 2)}BTCB</p>
                   </Grid>
                 </Grid>
-                <hr style={{ border: '0.5px solid rgba(195, 197, 203, 0.75)', marginLeft: '50px' }} />
+                <hr style={{ border: '0.5px solid rgba(199, 195, 200, 0.8)', marginLeft: '50px' }} />
                 <Grid container style={{ textAlign: 'center' }}>
                   <Grid item xs={3}>
                     <img
@@ -97,7 +110,7 @@ const BombFinanceSummary: React.FC<any> = ({ bombFinance, details }) => {
                     <p style={{ padding: '0' }}>{roundAndFormatNumber(bshare.price.inbnb, 2)}BTCB</p>
                   </Grid>
                 </Grid>
-                <hr style={{ border: '0.5px solid rgba(195, 197, 203, 0.75)', marginLeft: '50px' }} />
+                <hr style={{ border: '0.5px solid rgba(199, 195, 200, 0.8)', marginLeft: '50px' }} />
                 <Grid container style={{ textAlign: 'center' }}>
                   <Grid item xs={3}>
                     <img
@@ -128,8 +141,35 @@ const BombFinanceSummary: React.FC<any> = ({ bombFinance, details }) => {
                     <p style={{ padding: '0' }}>{roundAndFormatNumber(bbond.price.inbnb, 2)}BTCB</p>
                   </Grid>
                 </Grid>
-                <hr style={{ border: '0.5px solid rgba(195, 197, 203, 0.75)', marginLeft: '50px' }} />
+                <hr style={{ border: '0.5px solid rgba(199, 195, 200, 0.8)', marginLeft: '70px' }} />
               </Grid>
+              <Grid item xs={3}></Grid>
+              {/* epoch details */}
+              <Grid item xs={4} style={{ textAlign: 'center' }}>
+                <Typography style={{ color: '#fff' }}>Current Epoch</Typography>
+                <Typography style={{ fontSize: '2rem' }}>{Number(currentEpoch)}</Typography>
+                <hr style={{ border: '0.5px solid rgba(199, 195, 200, 0.8)', width: '30%' }} />
+                <Typography style={{ fontSize: '2.5rem' }}>
+                  {' '}
+                  <ProgressCountdown base={moment().toDate()} hideBar={true} deadline={to} description="Next Epoch" />
+                </Typography>
+                <Typography style={{ color: '#fff', fontSize: '1.5rem' }}>Next Epoch in</Typography>
+
+                <hr style={{ border: '0.5px solid rgba(199, 195, 200, 0.8)', width: '30%' }} />
+
+                <p>
+                  <span style={{ fontSize: '0.8rem' }}>Live TWAP :</span>{' '}
+                  <span style={{ color: ' #00E8A2' }}>{livetwap}</span>
+                </p>
+                <p>
+                  <span style={{ fontSize: '0.8rem' }}>TVL :</span>{' '}
+                  <span style={{ color: ' #00E8A2' }}>{"$"+ roundAndFormatNumber(Number(tvl), 2)}</span>
+                </p>
+                <p>
+                  <span style={{ fontSize: '0.8rem' }}>Last Epoch TWAP :</span>
+                  <span style={{ color: ' #00E8A2' }}>{lasttwap}</span>
+                </p>
+               </Grid>
             </Grid>
           </Paper>
         </Grid>

@@ -11,6 +11,7 @@ import useBombFinance from '../../hooks/useBombFinance';
 import useBombStats from '../../hooks/useBombStats';
 import useBondStats from '../../hooks/useBondStats';
 import usebShareStats from '../../hooks/usebShareStats';
+import BoardroomNews from './components/BoardroomNews';
 const BackgroundImage = createGlobalStyle`
   body {
     background: url(${HomeImage}) repeat !important;
@@ -89,9 +90,11 @@ const Dashboard = () => {
           <title>{TITLE}</title>
         </Helmet>
         {!!account ? (
-          <div>
+          <><div>
             <BombFinanceSummary details={details} bombFinance={bombFinance} />
-          </div>
+          </div><div>
+              <BoardroomNews />
+            </div></>
         ) : (
           <UnlockWallet />
         )}

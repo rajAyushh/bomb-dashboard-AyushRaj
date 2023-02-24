@@ -17,7 +17,6 @@ import useApprove, { ApprovalState } from '../../../hooks/useApprove';
 import BShareImage from '../../../assets/img/bshare-512.png';
 import BombBTCBImage from '../../../assets/img/bomb-bitcoin-LP.png';
 import BShareBNBImage from '../../../assets/img/bshare-bnb-LP.png';
-
 import { getDisplayBalance } from '../../../utils/formatBalance';
 // Bombfarm stake details stored in const
 const BombFarms: React.FC<any> = () => {
@@ -86,7 +85,15 @@ const BombFarms: React.FC<any> = () => {
 
   const canWithdraw = useWithdrawCheck();
   const canClaimReward = useClaimRewardCheck();
-
+  const StyledButton = styled.button`
+    background: transparent;
+    border: 4px solid currentColor;
+    color: ${(p) => (p.disabled ? '#FFFFFE80' : '#FFFFFE')};
+    border-radius: 21px;
+    margin-right: 11px;
+    padding: 7px;
+    margin: 0 auto;
+  `;
   return (
     <>
       <Grid xs={12} style={{ marginBottom: '40px' }}>
@@ -365,20 +372,5 @@ const BombFarms: React.FC<any> = () => {
     </>
   );
 };
-
-const StyledButton = styled.button`
-  background: transparent;
-  border: 2px solid currentColor;
-  color: ${(p) => (p.disabled ? '#FFFFFF80' : '#FFFFFF')};
-  border-radius: 20px;
-  margin-right: 10px;
-  padding: 5px;
-  margin: 0 auto;
-  cursor: ${(p) => (p.disabled ? 'not-allowed' : 'pointer')};
-  &:hover {
-    background-color: ${(p) => (p.disabled ? 'transparent' : '#FFFFFF')};
-    color: ${(p) => (p.disabled ? '#FFFFFF80' : 'black')};
-  }
-`;
 
 export default BombFarms;

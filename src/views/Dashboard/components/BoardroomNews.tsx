@@ -49,7 +49,15 @@ const BoardroomNews: React.FC<any> = () => {
   );
 
   const earnedInDollars = (Number(tokenPriceInDollars) * Number(getDisplayBalance(earning))).toFixed(2);
-
+  const StyledButton = styled.button`
+  background: transparent;
+  border: 4px solid currentColor;
+  color: ${(p) => (p.disabled ? '#FFFFFE80' : '#FFFFFE')};
+  border-radius: 21px;
+  margin-right: 11px;
+  padding: 7px;
+  margin: 0 auto;
+`;
   //All values of Token stored
   const values = {
     // boardroom values, daily return, your stake, earned
@@ -80,45 +88,44 @@ const BoardroomNews: React.FC<any> = () => {
             </a>
             {/* Read Investement Strategy button */}
             <Button
-              href="https://app.bogged.finance/bsc/swap?tokenIn=BNB&tokenOut=0x531780FAcE85306877D7e1F05d713D1B50a37F7A"
+              href="./invest"
               style={{
                 color: 'white',
-                background:
-                  'radial-gradient(59345.13% 4094144349.28% at 39511.5% -2722397851.45%, rgba(27, 32, 56, 255) 0%, rgba(0, 180, 240, 0.5) 100%)',
+                background: 'rgba(7, 6, 5, 255)',
                 width: '100%',
                 marginBottom: '17px',
                 border: '2px solid',
               }}
             >
-              <strong>Invest Now</strong>
+              Invest Now
             </Button>
             {/* discord button */}
             <Button
               href="https://discord.bomb.money"
               style={{
-                color: 'white',
-                background: 'rgba(255, 255, 255, 0.5)',
+                color: 'black',
+                background: 'rgba(233, 241, 251, 255)',
                 width: '45%',
                 border: '1px solid',
                 marginRight: '25px',
               }}
             >
               <img alt="discord icon" style={{ width: '20px', marginRight: '5px' }} src={DiscordIcon} />
-              <strong>Chat on Discord</strong>
+              Chat on Discord
             </Button>
             {/* Docs button */}
             <Button
               href="https://docs.bomb.money/"
               style={{
-                color: 'white',
-                background: 'rgba(255, 255, 255, 0.5)',
+                color: 'black',
+                background: 'rgba(233, 241, 251, 255)',
                 width: '45%',
                 border: '1px solid',
                 marginLeft: '25px',
               }}
             >
               <img alt="doc icon" style={{ width: '20px', marginRight: '5px' }} src={DocIcon} />
-              <strong>Read Docs</strong>
+              Read Docs
             </Button>
           </Box>
           <Paper
@@ -289,19 +296,6 @@ const BoardroomNews: React.FC<any> = () => {
     </>
   );
 };
-const StyledButton = styled.button`
-  background: transparent;
 
-  border: 2px solid currentColor;
-  color: ${(p) => (p.disabled ? '#FFFFFF80' : '#FFFFFF')};
-  border-radius: 15px;
-  margin-right: 15px;
-  padding: 8px;
-  margin: 0 auto;
-  cursor: ${(p) => (p.disabled ? 'not-allowed' : 'pointer')};
-  &:hover {
-    background-color: ${(p) => (p.disabled ? 'transparent' : '#FFFFFF')};
-    color: ${(p) => (p.disabled ? '#FFFFFF80' : 'black')};
-  }
-`;
+
 export default BoardroomNews;

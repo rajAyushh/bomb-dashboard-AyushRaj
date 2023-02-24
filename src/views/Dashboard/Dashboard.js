@@ -12,7 +12,7 @@ import useBondStats from '../../hooks/useBondStats';
 import usebShareStats from '../../hooks/usebShareStats';
 import BoardroomNews from './components/BoardroomNews';
 import BombFarms from './components/BombFarms';
-// import Bonds from './components/Bonds';
+import Bonds from './components/Bonds';
 const BackgroundImage = createGlobalStyle`
   body {
     background: url(${HomeImage}) repeat !important;
@@ -57,13 +57,10 @@ const Dashboard = () => {
     [bBondStats],
   );
   const bBondPriceInBNB = useMemo(() => (bBondStats ? Number(bBondStats.tokenInFtm).toFixed(4) : null), [bBondStats]);
-  const bBondCurrentSupply = useMemo(
-    () => (bBondStats ? String(bBondStats.circulatingSupply) : null),
-    [bBondStats],
-  );
+  const bBondCurrentSupply = useMemo(() => (bBondStats ? String(bBondStats.circulatingSupply) : null), [bBondStats]);
   const bBondTotalSupply = useMemo(() => (bBondStats ? String(bBondStats.totalSupply) : null), [bBondStats]);
 
-//supplies of all tokens
+  //supplies of all tokens
   const details = {
     bomb: {
       currentSupply: bombCurrentSupply,
@@ -87,19 +84,22 @@ const Dashboard = () => {
     <Switch>
       <Page>
         <BackgroundImage />
-          <title>{TITLE}</title>
+        <title>{TITLE}</title>
         {!!account ? (
-          <><div>
-            <BombFinanceSummary details={details} bombFinance={bombFinance} />
-          </div><div>
+          <>
+            <div>
+              <BombFinanceSummary details={details} bombFinance={bombFinance} />
+            </div>
+            <div>
               <BoardroomNews />
             </div>
             <div>
               <BombFarms />
-             </div>{/*<div>
+            </div>
+            <div>
               <Bonds />
-            </div> */}
-            </>
+            </div>
+          </>
         ) : (
           <UnlockWallet />
         )}

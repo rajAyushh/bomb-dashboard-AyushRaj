@@ -96,7 +96,7 @@ const BombFarms: React.FC<any> = () => {
   `;
   return (
     <>
-      <Grid xs={12} style={{ marginBottom: '40px' }}>
+      <Grid xs={12} style={{ marginBottom: '42px' }}>
         {/* BOMBFARM TAB */}
         <Paper
           style={{

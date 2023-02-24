@@ -26,7 +26,7 @@ const BombFinanceSummary: React.FC<any> = ({ bombFinance, details }) => {
   const tvl = useTotalValueLocked();
   return (
     <>
-      <Grid xs={12} style={{ marginBottom: '12px' }}>
+      <Grid xs={12} style={{ marginBottom: '42px', justifyContent: 'space-between' }}>
         <Paper style={{ background: 'rgba(30, 32, 60, 0.5)', height: '400px', borderRadius: '2px' }}>
           {/* start of BombFinanceSummary table */}
           <div style={{ textAlign: 'center', paddingTop: '2px' }}>
@@ -143,7 +143,7 @@ const BombFinanceSummary: React.FC<any> = ({ bombFinance, details }) => {
               </Grid>
               <hr style={{ border: '0.5px solid rgba(199, 195, 200, 0.8)', marginLeft: '70px' }} />
             </Grid>
-            <Grid item xs={3}></Grid>
+            {/* <Grid item xs={3}></Grid> */}
             {/* epoch details */}
             <Grid item xs={4} style={{ textAlign: 'center' }}>
               <Typography style={{ color: '#fff' }}>Current Epoch</Typography>

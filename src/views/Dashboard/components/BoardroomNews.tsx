@@ -160,7 +160,7 @@ const BoardroomNews: React.FC<any> = () => {
               <hr style={{ border: '0.5px solid rgba(199, 195, 200, 0.8)' }} />
               <p style={{ float: 'right' }}>
                 Total Staked:
-                <img alt="b share" style={{ width: '13px', margin: '0 5px' }} src={BShareImage} />
+                <img alt="BShare" style={{ width: '13px', margin: '0 5px' }} src={BShareImage} />
                 <strong>{values.totalstaked}</strong>
               </p>
             </Box>
@@ -173,7 +173,7 @@ const BoardroomNews: React.FC<any> = () => {
               <Grid item xs={2} style={{ padding: '0', textAlign: 'left' }}>
                 Your Stake:
                 <p>
-                  <img alt="b share" style={{ width: '20px' }} src={BShareImage} />
+                  <img alt="BShare" style={{ width: '20px' }} src={BShareImage} />
                   {values.yourstake}
                 </p>
                 <p>≈ ${values.yourstakeInDollars}</p>
@@ -211,7 +211,57 @@ const BoardroomNews: React.FC<any> = () => {
                     </div>
                   </StyledButton>
 
-                  
+                  <StyledButton
+                    // only works when user can withdraw and claim reward
+                    disabled={Number(values.yourstake) === 0 || (!canWithdraw && !canClaimReward)}
+                    onClick={() => {
+                      values.withdraw();
+                    }}
+                    style={{ width: '45%', border: 'solid 2px', borderRadius: '20px', marginRight: '10px' }}
+                  >
+                    <div
+                      style={{
+                        display: 'flex',
+                        justifyContent: 'space-evenly',
+                        alignItems: 'center',
+                        flexDirection: 'row',
+                      }}
+                    >
+                      <div>Withdraw</div>
+                      <div>
+                        <img alt="Withdraw icon" style={{ width: '20px' }} src={WithdrawImage} />
+                      </div>
+                    </div>
+                  </StyledButton>
+
+                  <StyledButton
+                    onClick={() => {
+                      values.claimrewards();
+                    }}
+                    // only works if canClaim Reward hook returns true
+                    disabled={Number(values.earned) === 0 || !canClaimReward}
+                    style={{
+                      width: '90%',
+                      border: 'solid 2px',
+                      borderRadius: '20px',
+                      marginTop: '10px',
+                      marginRight: '10px',
+                    }}
+                  >
+                    <div
+                      style={{
+                        display: 'flex',
+                        justifyContent: 'space-evenly',
+                        alignItems: 'center',
+                        flexDirection: 'row',
+                      }}
+                    >
+                      <div>Claim Rewards</div>
+                      <div>
+                        <img alt="BShare" style={{ width: '20px' }} src={BShareImage} />
+                      </div>
+                    </div>
+                  </StyledButton>
                 </Box>
               </Grid>
             </Grid>

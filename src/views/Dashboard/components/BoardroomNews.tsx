@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { Box, Button, Card, CardContent, Grid, Paper, Typography } from '@material-ui/core';
+import { Box, Button, Grid, Paper, Typography } from '@material-ui/core';
 import useStakedBalanceOnBoardroom from '../../../hooks/useStakedBalanceOnBoardroom';
 import useTotalStakedOnBoardroom from '../../../hooks/useTotalStakedOnBoardroom';
 import useEarningsOnBoardroom from '../../../hooks/useEarningsOnBoardroom';
@@ -28,10 +28,10 @@ const BoardroomNews: React.FC<any> = () => {
   const [boardroomTVL, setBoardroomTVL] = useState(0);
   useEffect(() => {
     const TVLcalc = async () => {
-      const BSHAREPrice = (await bombFinance.getShareStat()).priceInDollars;
-      const boardroomtShareBalanceOf = await bombFinance.BSHARE.balanceOf(bombFinance.currentBoardroom().address);
+      const BSharePrice = (await bombFinance.getShareStat()).priceInDollars;
+      const BoardroomShareBalance = await bombFinance.BSHARE.balanceOf(bombFinance.currentBoardroom().address);
       setBoardroomTVL(
-        Number(getDisplayBalance(boardroomtShareBalanceOf, bombFinance.BSHARE.decimal)) * Number(BSHAREPrice),
+        Number(getDisplayBalance(BoardroomShareBalance, bombFinance.BSHARE.decimal)) * Number(BSharePrice),
       );
     };
     TVLcalc();
@@ -52,16 +52,13 @@ const BoardroomNews: React.FC<any> = () => {
 
   //All values of Token stored
   const values = {
-    heading: 'Boardroom',
-    icon: 'BSHARE',
-    message: 'Stake BSHARE and earn BOMB every epoch',
-    bg: true,
+    // boardroom values, daily return, your stake, earned
     approve: approveStatus !== ApprovalState.NOT_APPROVED,
     tvl: roundAndFormatNumber(boardroomTVL, 2),
     totalstaked: getDisplayBalance(totalStaked),
     yourstakeInDollars: earnedInDollars,
     yourstake: getDisplayBalance(stakedBalance),
-    returns: roundAndFormatNumber(useFetchBoardroomAPR() / 365, 2),
+    dailyReturn: roundAndFormatNumber(useFetchBoardroomAPR() / 365, 2),
     earned: getDisplayBalance(earning),
     deposit: approve,
     withdraw: onRedeem,
@@ -98,7 +95,13 @@ const BoardroomNews: React.FC<any> = () => {
             {/* discord button */}
             <Button
               href="https://discord.bomb.money"
-              style={{ color: 'white', background: 'rgba(255, 255, 255, 0.5)', width: '45%', border: '1px solid', marginRight: '25px' }}
+              style={{
+                color: 'white',
+                background: 'rgba(255, 255, 255, 0.5)',
+                width: '45%',
+                border: '1px solid',
+                marginRight: '25px',
+              }}
             >
               <img alt="discord icon" style={{ width: '20px', marginRight: '5px' }} src={DiscordIcon} />
               <strong>Chat on Discord</strong>
@@ -106,13 +109,19 @@ const BoardroomNews: React.FC<any> = () => {
             {/* Docs button */}
             <Button
               href="https://docs.bomb.money/"
-              style={{ color: 'white', background: 'rgba(255, 255, 255, 0.5)', width: '45%', border: '1px solid' , marginLeft: '25px' }}
+              style={{
+                color: 'white',
+                background: 'rgba(255, 255, 255, 0.5)',
+                width: '45%',
+                border: '1px solid',
+                marginLeft: '25px',
+              }}
             >
               <img alt="doc icon" style={{ width: '20px', marginRight: '5px' }} src={DocIcon} />
               <strong>Read Docs</strong>
             </Button>
           </Box>
-            <Paper
+          <Paper
             style={{
               background: 'rgba(30, 32, 60, 0.5)',
               height: '300px',
@@ -122,135 +131,91 @@ const BoardroomNews: React.FC<any> = () => {
             }}
             variant="outlined"
           >
-              <Box p={4} style={{ textAlign: 'left' }}>
-                <img alt="b share" style={{ width: '50px', float: 'left', marginRight: '10px' }} src={BShareImage} />
-                <h3 style={{ color: 'white' , textTransform: 'capitalize' }}>
-                  BoardRoom
-                  <span
-                    style={{
-                      color: 'white',
-                      fontSize: '0.7rem',
-                      padding: '3px',
-                      borderRadius: '3px',
-                      marginLeft: '20px',
-                      verticalAlign: 'center', textTransform: 'capitalize',
-                      backgroundColor: 'rgba(0, 232, 162, 0.5)',
-                    }}
-                  >
-                    Recommended
-                  </span>
-                </h3>
-                <p>
-                  Stake BSHARE and earn BOMB every epoch
-                  <span style={{ float: 'right' }}>
-                    TVL: <strong>$ {values.tvl}</strong>
-                  </span>
-                </p>
-                {/* Boardroom bshare details and deposit section */}
-                <hr style={{ border: '0.5px solid rgba(199, 195, 200, 0.8)' }} />
-                <p style={{ float: 'right' }}>
-                  Total Staked:
-                  <img alt="b share" style={{ width: '13px', margin: '0 5px' }} src={BShareImage} />
-                  <strong>{values.totalstaked}</strong>
-                </p>
-              </Box>
-              <Grid container spacing={4} style={{ textAlign: 'center' }}>
-                <Grid item xs={3} style={{ padding: '0' }}>
-                  Daily returns:
-                  <Typography style={{ fontSize: '2rem' }}>{values.returns}%</Typography>{' '}
-                </Grid>
-                <Grid item xs={2} style={{ padding: '0', textAlign: 'left' }}>
-                  Your Stake:
-                  <p>
-                    <img alt="b share" style={{ width: '20px' }} src={BShareImage} />
-                    {values.yourstake}
-                  </p>
-                  <p>≈ ${values.yourstakeInDollars}</p>
-                </Grid>
-                <Grid item xs={2} style={{ padding: '0', textAlign: 'left' }}>
-                  Earned:
-                  <p>
-                    <img alt="bomb" style={{ width: '20px' }} src={BombImage} />
-                    {values.earned}
-                  </p>
-                  <p>≈ $ {values.earned}</p>
-                </Grid>
-                <Grid item xs={5} style={{ padding: '0' }}>
-                  <Box style={{ textAlign: 'center', padding: '10px' }}>
-                    <StyledButton
-                      disabled={values.approve}
-                      onClick={() => {
-                        values.deposit();
-                      }}
-                      style={{ width: '45%', border: 'solid 2px', borderRadius: '20px', marginRight: '10px' }}
-                    >
-                      <div
-                        style={{
-                          display: 'flex',
-                          justifyContent: 'space-evenly',
-                          alignItems: 'center',
-                          flexDirection: 'row',
-                        }}
-                      >
-                        <div>Deposit</div>
-                        <div>
-                          <img alt="deposit icon" style={{ width: '20px' }} src={DepositImage} />
-                        </div>
-                      </div>
-                    </StyledButton>
-
-                    <StyledButton
-                      disabled={Number(values.yourstake) === 0 || (!canWithdraw && !canClaimReward)}
-                      onClick={() => {
-                        values.withdraw();
-                      }}
-                      style={{ width: '45%', border: 'solid 2px', borderRadius: '20px', marginRight: '10px' }}
-                    >
-                      <div
-                        style={{
-                          display: 'flex',
-                          justifyContent: 'space-evenly',
-                          alignItems: 'center',
-                          flexDirection: 'row',
-                        }}
-                      >
-                        <div>Withdraw</div>
-                        <div>
-                          <img alt="Withdraw icon" style={{ width: '20px' }} src={WithdrawImage} />
-                        </div>
-                      </div>
-                    </StyledButton>
-                    <StyledButton
-                      onClick={() => {
-                        values.claimrewards();
-                      }}
-                      disabled={Number(values.earned) === 0 || !canClaimReward} // disable button if claim isn't possible
-                      style={{
-                        width: '90%',
-                        border: 'solid 2px',
-                        borderRadius: '20px',
-                        marginTop: '10px',
-                        marginRight: '10px',
-                      }}
-                    >
-                      <div
-                        style={{
-                          display: 'flex',
-                          justifyContent: 'space-evenly',
-                          alignItems: 'center',
-                          flexDirection: 'row',
-                        }}
-                      >
-                        <div>Claim Rewards</div>
-                        <div>
-                          <img alt="b share" style={{ width: '20px' }} src={BShareImage} />
-                        </div>
-                      </div>
-                    </StyledButton>
-                  </Box>
-                </Grid>
+            <Box p={4} style={{ textAlign: 'left' }}>
+              {/* Boardroom section */}
+              <img alt="bSHARE" style={{ width: '50px', float: 'left', marginRight: '10px' }} src={BShareImage} />
+              <h3 style={{ color: 'white', textTransform: 'capitalize' }}>
+                BoardRoom
+                <span
+                  style={{
+                    color: 'white',
+                    fontSize: '0.7rem',
+                    padding: '3px',
+                    borderRadius: '3px',
+                    marginLeft: '20px',
+                    verticalAlign: 'center',
+                    textTransform: 'capitalize',
+                    backgroundColor: 'rgba(0, 232, 162, 0.5)',
+                  }}
+                >
+                  Recommended
+                </span>
+              </h3>
+              <p>
+                Stake BSHARE and earn BOMB every epoch
+                <span style={{ float: 'right' }}>
+                  TVL: <strong>$ {values.tvl}</strong>
+                </span>
+              </p>
+              <hr style={{ border: '0.5px solid rgba(199, 195, 200, 0.8)' }} />
+              <p style={{ float: 'right' }}>
+                Total Staked:
+                <img alt="b share" style={{ width: '13px', margin: '0 5px' }} src={BShareImage} />
+                <strong>{values.totalstaked}</strong>
+              </p>
+            </Box>
+            {/* Boardroom data */}
+            <Grid container spacing={4} style={{ textAlign: 'center' }}>
+              <Grid item xs={3} style={{ padding: '0' }}>
+                Daily Returns:
+                <Typography style={{ fontSize: '2rem' }}>{values.dailyReturn}%</Typography>{' '}
               </Grid>
-            </Paper>
+              <Grid item xs={2} style={{ padding: '0', textAlign: 'left' }}>
+                Your Stake:
+                <p>
+                  <img alt="b share" style={{ width: '20px' }} src={BShareImage} />
+                  {values.yourstake}
+                </p>
+                <p>≈ ${values.yourstakeInDollars}</p>
+              </Grid>
+              {/* Amount earned data in usd */}
+              <Grid item xs={2} style={{ padding: '0', textAlign: 'left' }}>
+                Earned:
+                <p>
+                  <img alt="bomb" style={{ width: '20px' }} src={BombImage} />
+                  {values.earned}
+                </p>
+                <p>≈ $ {values.earned}</p>
+              </Grid>
+              <Grid item xs={5} style={{ padding: '0' }}>
+                <Box style={{ textAlign: 'center', padding: '10px' }}>
+                  <StyledButton
+                    disabled={values.approve}
+                    onClick={() => {
+                      values.deposit();
+                    }}
+                    style={{ width: '45%', border: 'solid 2px', borderRadius: '20px', marginRight: '10px' }}
+                  >
+                    <div
+                      style={{
+                        display: 'flex',
+                        justifyContent: 'space-evenly',
+                        alignItems: 'center',
+                        flexDirection: 'row',
+                      }}
+                    >
+                      <div>Deposit</div>
+                      <div>
+                        <img alt="Deposit Icon" style={{ width: '20px' }} src={DepositImage} />
+                      </div>
+                    </div>
+                  </StyledButton>
+
+                  
+                </Box>
+              </Grid>
+            </Grid>
+          </Paper>
         </Grid>
         {/* Latest News grid item*/}
         <Grid item xs={12} sm={4} style={{ marginBottom: '20px' }}>
@@ -281,7 +246,7 @@ const StyledButton = styled.button`
   color: ${(p) => (p.disabled ? '#FFFFFF80' : '#FFFFFF')};
   border-radius: 15px;
   margin-right: 15px;
-  padding: 5px;
+  padding: 8px;
   margin: 0 auto;
   cursor: ${(p) => (p.disabled ? 'not-allowed' : 'pointer')};
   &:hover {

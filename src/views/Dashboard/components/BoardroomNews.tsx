@@ -69,7 +69,7 @@ const BoardroomNews: React.FC<any> = () => {
   const canClaimReward = useClaimRewardCheck();
   return (
     <>
-      <Grid container spacing={3} style={{ padding: '20px 8% 40px 8%' }}>
+      <Grid container spacing={3} style={{ marginBottom: '20px' }}>
         <Grid item xs={12} sm={8} style={{ marginBottom: '20px' }}>
           <Box p={2} style={{ textAlign: 'center' }}>
             <a

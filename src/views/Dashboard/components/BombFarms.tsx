@@ -19,7 +19,7 @@ import BombBTCBImage from '../../../assets/img/bomb-bitcoin-LP.png';
 import BShareBNBImage from '../../../assets/img/bshare-bnb-LP.png';
 
 import { getDisplayBalance } from '../../../utils/formatBalance';
-
+// Bombfarm stake details stored in const
 const BombFarms: React.FC<any> = () => {
   const bombStats = useBombStats();
   const tShareStats = useShareStats();
@@ -38,7 +38,7 @@ const BombFarms: React.FC<any> = () => {
   const bombBtcbearnedInDollars = (
     Number(bombBtcbPriceInDollars) * Number(getDisplayBalance(bombBtcbearnings))
   ).toFixed(2);
-
+  //bombfarm stats
   const bshareBnb = useBank('BshareBnbLPBShareRewardPool');
   const bshareBnbstatsOnPool = useStatsForPool(bshareBnb);
   const bshareBnbstakedBalance = useStakedBalance(bshareBnb.contract, bshareBnb.poolId);
@@ -55,7 +55,6 @@ const BombFarms: React.FC<any> = () => {
     Number(bSharebnbPriceInDollars) * Number(getDisplayBalance(bshareBnbearnings))
   ).toFixed(2);
 
-  // Details of bombBtcb and bshareBnb token for farm
   const bombbtcb = {
     heading: 'BOMB-BTCB',
     bg: false,
@@ -91,6 +90,7 @@ const BombFarms: React.FC<any> = () => {
   return (
     <>
       <Grid xs={12} style={{ marginBottom: '40px' }}>
+        {/* BOMBFARM TAB */}
         <Paper
           style={{
             background: 'rgba(30, 32, 60, 0.5)',
@@ -101,7 +101,7 @@ const BombFarms: React.FC<any> = () => {
           }}
           variant="outlined"
         >
-          {/* BOMB-BTCB */}
+          {/* claim all button  */}
           <Box style={{ textAlign: 'left', padding: '10px 20px 0px 20px' }}>
             <h3 style={{ color: 'white', textTransform: 'capitalize', paddingTop: '10px' }}>
               Bomb Farms
@@ -164,6 +164,7 @@ const BombFarms: React.FC<any> = () => {
               </p>
               <p>≈ ${bombbtcb.earned}</p>
             </Grid>
+            {/* deposit button  */}
             <Grid item xs={6} style={{ padding: '0' }}>
               <Box style={{ textAlign: 'center', marginTop: '60px' }}>
                 <StyledButton
@@ -187,10 +188,58 @@ const BombFarms: React.FC<any> = () => {
                     </div>
                   </div>
                 </StyledButton>
+                {/* withdraw button */}
+                <StyledButton
+                  disabled={Number(bombbtcb.yourstake) === 0 || (!canWithdraw && !canClaimReward)}
+                  onClick={() => {
+                    bombbtcb.withdraw();
+                  }}
+                  style={{ width: '25%', border: 'solid 2px', borderRadius: '20px', marginRight: '10px' }}
+                >
+                  <div
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'space-evenly',
+                      alignItems: 'center',
+                      flexDirection: 'row',
+                    }}
+                  >
+                    <div>Withdraw</div>
+                    <div>
+                      <img alt="Withdraw icon" style={{ width: '20px' }} src={WithdrawImage} />
+                    </div>
+                  </div>
+                </StyledButton>
+                {/* claim reward button  */}
+                <StyledButton
+                  onClick={() => {
+                    bombbtcb.claimrewards();
+                  }}
+                  disabled={Number(bombbtcb.earned) === 0 || !canClaimReward}
+                  style={{
+                    width: '30%',
+                    border: 'solid 2px',
+                    borderRadius: '20px',
+                  }}
+                >
+                  <div
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'space-evenly',
+                      alignItems: 'center',
+                      flexDirection: 'row',
+                    }}
+                  >
+                    <div>Claim Rewards</div>
+                    <div>
+                      <img alt="b share" style={{ width: '20px', marginLeft: '5px' }} src={BShareImage} />
+                    </div>
+                  </div>
+                </StyledButton>
               </Box>
             </Grid>
           </Grid>
-          {/* BSHARE-BNB */}
+
           <Box p={4} style={{ textAlign: 'left' }}>
             <img alt="b share bnb" style={{ width: '60px', float: 'left', marginRight: '10px' }} src={BShareBNBImage} />
             <h3 style={{ color: 'white', marginTop: '20px' }}>
@@ -257,6 +306,54 @@ const BombFarms: React.FC<any> = () => {
                     <div>Deposit</div>
                     <div>
                       <img alt="deposit icon" style={{ width: '20px' }} src={DepositImage} />
+                    </div>
+                  </div>
+                </StyledButton>
+                {/* withdraw button  */}
+                <StyledButton
+                  disabled={Number(bsharebnb.yourstake) === 0 || (!canWithdraw && !canClaimReward)}
+                  onClick={() => {
+                    bsharebnb.withdraw();
+                  }}
+                  style={{ width: '25%', border: 'solid 2px', borderRadius: '20px', marginRight: '10px' }}
+                >
+                  <div
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'space-evenly',
+                      alignItems: 'center',
+                      flexDirection: 'row',
+                    }}
+                  >
+                    <div>Withdraw</div>
+                    <div>
+                      <img alt="Withdraw icon" style={{ width: '20px' }} src={WithdrawImage} />
+                    </div>
+                  </div>
+                </StyledButton>
+                {/* claim reward button  */}
+                <StyledButton
+                  disabled={Number(bsharebnb.earned) === 0 || !canClaimReward}
+                  onClick={() => {
+                    bsharebnb.claimrewards();
+                  }}
+                  style={{
+                    width: '30%',
+                    border: 'solid 2px',
+                    borderRadius: '20px',
+                  }}
+                >
+                  <div
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'space-evenly',
+                      alignItems: 'center',
+                      flexDirection: 'row',
+                    }}
+                  >
+                    <div>Claim Rewards</div>
+                    <div>
+                      <img alt="b share" style={{ width: '20px', marginLeft: '5px' }} src={BShareImage} />
                     </div>
                   </div>
                 </StyledButton>

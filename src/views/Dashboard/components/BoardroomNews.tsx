@@ -20,6 +20,7 @@ import DiscordIcon from '../../../assets/img/discord.svg';
 import DocIcon from '../../../assets/img/document.svg';
 import BombImage from '../../../assets/img/bomb.png';
 import BShareImage from '../../../assets/img/bshare-512.png';
+import NewsTicker from './NewsTicker';
 
 const BoardroomNews: React.FC<any> = () => {
   // Stake share details stored in const
@@ -288,7 +289,9 @@ const BoardroomNews: React.FC<any> = () => {
           >
             <Box p={4} style={{ textAlign: 'left' }}>
               {/* latest news items can be imported here and used using auto scroll */}
-              <h3 style={{ color: 'white', textTransform: 'capitalize' }}>Latest News</h3>
+              <h3 style={{ color: 'white', textTransform: 'capitalize', marginBottom:'40px' }}>Latest News</h3>
+              <h3> </h3>
+              <NewsTicker />
             </Box>
           </Paper>
         </Grid>

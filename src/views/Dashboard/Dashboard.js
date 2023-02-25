@@ -13,12 +13,16 @@ import usebShareStats from '../../hooks/usebShareStats';
 import BoardroomNews from './components/BoardroomNews';
 import BombFarms from './components/BombFarms';
 import Bonds from './components/Bonds';
+import LatestNews from './components/LatestNews';
+import NewsTicker from './components/NewsTicker';
 const BackgroundImage = createGlobalStyle`
   body {
-    background: url(${HomeImage}) repeat !important;
+    background: url(${HomeImage}) repeat;
     background-size: cover !important;
     background-color: #171923;
     color:white;
+    background-attachment: scroll;
+  min-height: 50vh;
   }
 `;
 
@@ -91,7 +95,7 @@ const Dashboard = () => {
               <BombFinanceSummary details={details} bombFinance={bombFinance} />
             </div>
             <div>
-              <BoardroomNews />
+              <BoardroomNews /> 
             </div>
             <div>
               <BombFarms />

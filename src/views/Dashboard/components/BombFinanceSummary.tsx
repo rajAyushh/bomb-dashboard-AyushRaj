@@ -143,7 +143,7 @@ const BombFinanceSummary: React.FC<any> = ({ bombFinance, details }) => {
               </Grid>
               <hr style={{ border: '0.5px solid rgba(199, 195, 200, 0.8)', marginLeft: '70px' }} />
             </Grid>
-            {/* <Grid item xs={3}></Grid> */}
+            <Grid item xs={3}></Grid>
             {/* epoch details */}
             <Grid item xs={4} style={{ textAlign: 'center' }}>
               <Typography style={{ color: '#fff' }}>Current Epoch</Typography>

@@ -35,6 +35,12 @@ const Bonds: React.FC<any> = () => {
   );
   const StyledButton = styled.button`
     background: transparent;
+    cursor: ${(p) => (p.disabled ? 'not-allowed' : 'pointer')};
+    &:hover {
+      background-color: ${(p) => (p.disabled ? 'transparent' : '#FFFFFF')};
+      color: ${(p) => (p.disabled ? '#FFFFFF80' : 'black')};
+    }
+    color: ${(p) => (p.disabled ? '#FFFFFE80' : '#FFFFFE')};
     border: 4px solid currentColor;
     color: ${(p) => (p.disabled ? '#FFFFFE80' : '#FFFFFE')};
     border-radius: 21px;
@@ -112,7 +118,7 @@ const Bonds: React.FC<any> = () => {
               Available to redeem:
               <h3 style={{ color: 'white', fontSize: '2rem' }}>
                 <img alt="b bond" style={{ width: '40px' }} src={Bbond} />
-                {getDisplayBalance(bondsPurchasable)}
+                {getDisplayBalance(bondBalance)}
               </h3>
             </Grid>
 

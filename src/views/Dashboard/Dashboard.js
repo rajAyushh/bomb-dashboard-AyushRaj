@@ -11,8 +11,8 @@ import useBombStats from '../../hooks/useBombStats';
 import useBondStats from '../../hooks/useBondStats';
 import usebShareStats from '../../hooks/usebShareStats';
 import BoardroomNews from './components/BoardroomNews';
-import BombFarms from './components/BombFarms';
-import Bonds from './components/Bonds';
+import BombFarms from './components/BombFarmsSection';
+import Bonds from './components/BondsSection';
 import LatestNews from './components/LatestNews';
 import NewsTicker from './components/NewsTicker';
 const BackgroundImage = createGlobalStyle`

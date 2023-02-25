@@ -51,14 +51,19 @@ const BoardroomNews: React.FC<any> = () => {
 
   const earnedInDollars = (Number(tokenPriceInDollars) * Number(getDisplayBalance(earning))).toFixed(2);
   const StyledButton = styled.button`
-  background: transparent;
-  border: 4px solid currentColor;
-  color: ${(p) => (p.disabled ? '#FFFFFE80' : '#FFFFFE')};
-  border-radius: 21px;
-  margin-right: 11px;
-  padding: 7px;
-  margin: 0 auto;
-`;
+    background: transparent;
+    cursor: ${(p) => (p.disabled ? 'not-allowed' : 'pointer')};
+    &:hover {
+      background-color: ${(p) => (p.disabled ? 'transparent' : '#FFFFFF')};
+      color: ${(p) => (p.disabled ? '#FFFFFF80' : 'black')};
+    }
+    border: 4px solid currentColor;
+    color: ${(p) => (p.disabled ? '#FFFFFE80' : '#FFFFFE')};
+    border-radius: 21px;
+    margin-right: 11px;
+    padding: 7px;
+    margin: 0 auto;
+  `;
   //All values of Token stored
   const values = {
     // boardroom values, daily return, your stake, earned
